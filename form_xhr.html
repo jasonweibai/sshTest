@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>表单中的Ajax</title>
+    </head>
+    <body>
+      <form action="" method="psot"></form>
+        用户名:<input type="text" id="user" name="user"><br>
+        密码  :<input type="password" id="pwd" name="pwd"><br>
+        <input type="button" id="btn" value="登录">
+        <!-- 提交 submit 使用Ajax提交表单，不需要使用submit 改为button -->
+    </body>
+    <script>
+       //1.给登录按钮绑定点击事件
+       var btn = document.getElementById('btn');
+       btn.onclick = function(){
+       	 //Ajax实现表单的提交
+       	 //1.xhr
+       	 var xhr = new XMLHttpRequest();
+       	 //2.open('post','url')
+       	 xhr.open("post","form_xhr.php");
+       	 xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+       	 //3.send('数据')
+       	 var user = document.getElementById('user').value;
+       	 var pwd = document.getElementById('pwd').value;
+         xhr.send('user='+user+'&pwd='+pwd);
+       	 //4.onreadystatechange
+       	 xhr.onreadystatechange = function(){
+       	 if(xhr.readyState==4 && xhr.status==200){
+       	 //5.console.log(xhr.responseText)
+       	      console.log(xhr.responseText)
+              if(xhr.responseText=='login succ'){
+                     alert('账号正确')
+              }else{
+              	     alert('账号错误')
+              }
+       	  }
+       	 }
+       }
+    </script>
+</html>
